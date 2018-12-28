@@ -1,0 +1,61 @@
+# ==============================================================================
+# Below we forbid everything and only allow what we know, that's much easier
+# than blocking about 500 different test files and bug report outputs.
+# ==============================================================================
+/.*
+/*
+!/.gitignore
+!/LICENSE
+!/README.md
+
+
+# =======================================
+# Reject some generic files
+# =======================================
+*~
+*.rej
+*.orig
+*.bak
+
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+# *.dll
+*.dylib
+
+# Qt-es
+
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile*
+*build-*
+
+# QtCreator
+
+*.autosave
+
+# QtCtreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCtreator CMake
+CMakeLists.txt.user*
+
+# =======================================
+# And reject some specific files
+# =======================================
+/scripts
+
