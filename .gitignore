@@ -4,9 +4,17 @@
 # ==============================================================================
 /.*
 /*
+!/3rd
+!/data
+!/doc
+!/include
+!/src
+!/test
 !/.gitignore
 !/LICENSE
 !/README.md
+!/version
+!/VisibilityAnalysis.pro
 
 
 # =======================================
