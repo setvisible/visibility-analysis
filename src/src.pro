@@ -55,6 +55,7 @@ INCLUDEPATH += $$PWD/../include/
 include($$PWD/widgets/widgets.pri)
 
 HEADERS += \
+    $$PWD/about.h \
     $$PWD/builddefs.h \
     $$PWD/globals.h \
     $$PWD/version.h
