@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>icons/logo/paper-plane.ico</file>
         <file>icons/logo/paper-plane_128x128.png</file>
+        <file>icons/menu/view_axes_24x24.png</file>
+        <file>icons/menu/view_background_24x24.png</file>
+        <file>icons/menu/view_grid_24x24.png</file>
     </qresource>
 </RCC>
