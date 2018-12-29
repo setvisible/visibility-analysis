@@ -4,8 +4,6 @@
 TEMPLATE = app
 TARGET   = editor
 QT      += core gui
-QT      += xml
-QT      += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,12 +19,12 @@ lessThan(QT_VERSION, 5.0) {
 #-------------------------------------------------
 # DEFINES
 #-------------------------------------------------
-DEFINES += WITH_SELECTION_PROCESSING
 
 
 #-------------------------------------------------
 # DEPENDENCIES
 #-------------------------------------------------
+include($$PWD/../VisibilityAnalysis_config.pri)
 include($$PWD/../3rd/3rd.pri)
 
 
@@ -52,6 +50,8 @@ INCLUDEPATH += $$PWD/../include/
 #-------------------------------------------------
 # SOURCES
 #-------------------------------------------------
+include($$PWD/core/core.pri)
+include($$PWD/utils/utils.pri)
 include($$PWD/widgets/widgets.pri)
 
 HEADERS += \
@@ -98,9 +98,32 @@ DESTDIR = $${OUT_PWD}/../visibility_install
 #-------------------------------------------------
 # INSTALL
 #-------------------------------------------------
+# Remark:
+# =======
+# Eventually, in your favorite IDE, replace build chain command
+#   'make'
+# by
+#   'make install'
+#
+# It will install the DLLs, documentation, data, etc.
+# that are required to execute the application.
+#
+
 # instructions for 'make install'
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
+
+# install Qt binaries (for Windows only)
+# This is a hack for 'windeployqt'
+win32{
+    CONFIG(debug,debug|release){
+        libs_qt_to_copy.files += $$[QT_INSTALL_PLUGINS]/platforms/qminimald.dll
+        libs_qt_to_copy.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindowsd.dll
+        libs_qt_to_copy.path = $${DESTDIR}/platforms
+        INSTALLS += libs_qt_to_copy
+    }else{
+        libs_qt_to_copy.files += $$[QT_INSTALL_PLUGINS]/platforms/qminimal.dll
+        libs_qt_to_copy.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
+        libs_qt_to_copy.path = $${DESTDIR}/platforms
+        INSTALLS += libs_qt_to_copy
+    }
 }
 
