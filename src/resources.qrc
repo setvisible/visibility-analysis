@@ -1,4 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>icons/logo/paper-plane.ico</file>
+        <file>icons/logo/paper-plane_128x128.png</file>
     </qresource>
 </RCC>
