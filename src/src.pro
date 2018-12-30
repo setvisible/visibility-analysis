@@ -68,6 +68,7 @@ SOURCES += \
 # RESOURCES
 #-------------------------------------------------
 RESOURCES += $$PWD/resources.qrc
+RESOURCES += $$PWD/examples/examples.qrc
 
 win32|unix {
     RC_FILE += $$PWD/resources_win.rc
