@@ -22,7 +22,6 @@
 class SceneManager;
 class GraphicsView;
 
-class QGridLayout;
 class QGraphicsScene;
 
 namespace Ui {
@@ -49,7 +48,6 @@ private:
 
     GraphicsView *m_graphicsView;
     QGraphicsScene *m_scene;
-    QGridLayout *m_layout;
 };
 
 #endif // WIDGETS_VIEWER_WIDGET_H

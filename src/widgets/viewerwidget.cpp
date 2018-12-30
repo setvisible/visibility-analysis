@@ -20,18 +20,16 @@
 #include <Widgets/GraphicsView>
 
 #include <QtWidgets/QGraphicsScene>
-#include <QtWidgets/QGridLayout>
 
 ViewerWidget::ViewerWidget(QWidget *parent) : QWidget(parent)
   , ui(new Ui::ViewerWidget)
   , m_sceneManager(Q_NULLPTR)
   , m_graphicsView(new GraphicsView(this))
   , m_scene(new QGraphicsScene(-100, -100, 100, 100))
-  , m_layout(new QGridLayout(this))
 {
     ui->setupUi(this);
 
-    m_layout->addWidget(m_graphicsView, 0, 0, 1, 1);
+    layout()->addWidget(m_graphicsView);
     m_graphicsView->setScene(m_scene);
     m_graphicsView->setMouseTracking(true);
 }
