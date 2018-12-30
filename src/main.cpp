@@ -15,10 +15,20 @@
  */
 
 #include "globals.h"
+#include "mainwindow.h"
 
+#include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
-    return 0;
+    QApplication app(argc, argv);
+
+    QCoreApplication::setApplicationName(STR_APPLICATION_NAME);
+    QCoreApplication::setOrganizationName(STR_APPLICATION_ORGANIZATION);
+    QCoreApplication::setApplicationVersion(STR_APPLICATION_VERSION);
+
+    MainWindow w;
+    w.show();
+    return app.exec();
 }
 

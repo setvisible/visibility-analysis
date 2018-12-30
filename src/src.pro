@@ -58,10 +58,16 @@ HEADERS += \
     $$PWD/about.h \
     $$PWD/builddefs.h \
     $$PWD/globals.h \
+    $$PWD/mainwindow.h \
     $$PWD/version.h
 
 SOURCES += \
+    $$PWD/mainwindow.cpp \
     $$PWD/main.cpp
+
+
+FORMS += \
+    $$PWD/mainwindow.ui
 
 
 #-------------------------------------------------
