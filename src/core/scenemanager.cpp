@@ -14,46 +14,38 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "viewerwidget.h"
-#include "ui_viewerwidget.h"
+#include "scenemanager.h"
 
-#include <Widgets/GraphicsView>
+#include "scene.h"
 
-#include <QtWidgets/QGraphicsScene>
-#include <QtWidgets/QGridLayout>
 
-ViewerWidget::ViewerWidget(QWidget *parent) : QWidget(parent)
-  , ui(new Ui::ViewerWidget)
-  , m_sceneManager(Q_NULLPTR)
-  , m_graphicsView(new GraphicsView(this))
-  , m_scene(new QGraphicsScene(-100, -100, 100, 100))
-  , m_layout(new QGridLayout(this))
+/*! \class Manager
+ *  \brief The class Manager is an adapter class for SceneManager.
+ *
+ * It manages the Undo/Redo Mechanism for the SceneManager.
+ */
+SceneManager::SceneManager(QObject *parent) : QObject(parent)
+  , m_scene(new Scene(this))
 {
-    ui->setupUi(this);
-
-    m_layout->addWidget(m_graphicsView, 0, 0, 1, 1);
-    m_graphicsView->setScene(m_scene);
-    m_graphicsView->setMouseTracking(true);
-}
-
-ViewerWidget::~ViewerWidget()
-{
-    delete ui;
+    this->clear();
 }
 
 /******************************************************************************
  ******************************************************************************/
-void ViewerWidget::setModel(SceneManager *sceneManager)
+/*! \brief Clear and emit the change, in order to update the views,
+ * that derive from AbstractSceneView.
+ */
+void SceneManager::clear()
 {
-    m_sceneManager = sceneManager;
 }
 
-QGraphicsScene* ViewerWidget::getScene() const
+/******************************************************************************
+ ******************************************************************************/
+/* SERIALISATION */
+void SceneManager::read(QByteArray &bytes, bool *ok)
 {
-  return m_scene;
 }
 
-GraphicsView* ViewerWidget::getView() const
+void SceneManager::write(QByteArray &bytes) const
 {
-  return m_graphicsView;
 }

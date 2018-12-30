@@ -14,42 +14,44 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WIDGETS_VIEWER_WIDGET_H
-#define WIDGETS_VIEWER_WIDGET_H
+#ifndef CORE_SCENEMANAGER_H
+#define CORE_SCENEMANAGER_H
 
-#include <QtWidgets/QWidget>
 
-class SceneManager;
-class GraphicsView;
+#include <QtCore/QObject>
+#include <QtCore/QtContainerFwd> /* Forward Declarations of the Qt's Containers */
 
-class QGridLayout;
-class QGraphicsScene;
+#include <QtCore/QSet>
 
-namespace Ui {
-class ViewerWidget;
-}
+QT_BEGIN_NAMESPACE
+class QString;
+QT_END_NAMESPACE
 
-class ViewerWidget : public QWidget
+class Scene;
+
+class SceneManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit ViewerWidget(QWidget *parent = 0);
-    ~ViewerWidget();
+    explicit SceneManager(QObject *parent = Q_NULLPTR);
 
-    void setModel(SceneManager *sceneManager);
 
-    virtual QGraphicsScene* getScene() const;
-    virtual GraphicsView* getView() const;
+    /* Plain Old Text Serialization */
+    void read(QByteArray &bytes, bool *ok = 0);
+    void write(QByteArray &bytes) const;
+
+    /* Public Getters */
+    Scene* scene() const { return m_scene; }
+
+Q_SIGNALS:
+    void changed();
 
 public Q_SLOTS:
-
+    virtual void clear();
+  
 private:
-    Ui::ViewerWidget *ui;
-    SceneManager *m_sceneManager;
+    Scene* m_scene;
 
-    GraphicsView *m_graphicsView;
-    QGraphicsScene *m_scene;
-    QGridLayout *m_layout;
 };
 
-#endif // WIDGETS_VIEWER_WIDGET_H
+#endif // CORE_SCENEMANAGER_H

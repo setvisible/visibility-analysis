@@ -14,42 +14,8 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WIDGETS_VIEWER_WIDGET_H
-#define WIDGETS_VIEWER_WIDGET_H
+#include "pointnode.h"
 
-#include <QtWidgets/QWidget>
-
-class SceneManager;
-class GraphicsView;
-
-class QGridLayout;
-class QGraphicsScene;
-
-namespace Ui {
-class ViewerWidget;
+PointNode::PointNode()
+{    
 }
-
-class ViewerWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit ViewerWidget(QWidget *parent = 0);
-    ~ViewerWidget();
-
-    void setModel(SceneManager *sceneManager);
-
-    virtual QGraphicsScene* getScene() const;
-    virtual GraphicsView* getView() const;
-
-public Q_SLOTS:
-
-private:
-    Ui::ViewerWidget *ui;
-    SceneManager *m_sceneManager;
-
-    GraphicsView *m_graphicsView;
-    QGraphicsScene *m_scene;
-    QGridLayout *m_layout;
-};
-
-#endif // WIDGETS_VIEWER_WIDGET_H
