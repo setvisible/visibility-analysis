@@ -14,8 +14,8 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WIDGETS_GRAPHICS_VIEW_H
-#define WIDGETS_GRAPHICS_VIEW_H
+#ifndef WIDGETS_GRAPHICSVIEW_H
+#define WIDGETS_GRAPHICSVIEW_H
 
 #include <QtWidgets/QGraphicsView>
 #include <QtGui/QColor>
@@ -56,4 +56,4 @@ private:
 
 };
 
-#endif // WIDGETS_GRAPHICS_VIEW_H
+#endif // WIDGETS_GRAPHICSVIEW_H

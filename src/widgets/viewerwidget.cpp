@@ -25,7 +25,7 @@ ViewerWidget::ViewerWidget(QWidget *parent) : QWidget(parent)
   , ui(new Ui::ViewerWidget)
   , m_sceneManager(Q_NULLPTR)
   , m_graphicsView(new GraphicsView(this))
-  , m_scene(new QGraphicsScene(-100, -100, 100, 100))
+  , m_scene(new QGraphicsScene(QRectF(QPointF(-100, 100), QSizeF(200, 200))))
 {
     ui->setupUi(this);
 

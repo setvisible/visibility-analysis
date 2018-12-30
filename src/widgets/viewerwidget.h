@@ -14,8 +14,8 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WIDGETS_VIEWER_WIDGET_H
-#define WIDGETS_VIEWER_WIDGET_H
+#ifndef WIDGETS_VIEWERWIDGET_H
+#define WIDGETS_VIEWERWIDGET_H
 
 #include <QtWidgets/QWidget>
 
@@ -50,4 +50,4 @@ private:
     QGraphicsScene *m_scene;
 };
 
-#endif // WIDGETS_VIEWER_WIDGET_H
+#endif // WIDGETS_VIEWERWIDGET_H
