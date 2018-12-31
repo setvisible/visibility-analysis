@@ -69,6 +69,10 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="action_ZoomFit"/>
+    <addaction name="action_ZoomIn"/>
+    <addaction name="action_ZoomOut"/>
+    <addaction name="separator"/>
     <addaction name="action_Axes"/>
     <addaction name="action_Grid"/>
     <addaction name="action_Background"/>
@@ -116,6 +120,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_ZoomFit"/>
+   <addaction name="action_ZoomIn"/>
+   <addaction name="action_ZoomOut"/>
+   <addaction name="separator"/>
    <addaction name="action_Axes"/>
    <addaction name="action_Grid"/>
    <addaction name="action_Background"/>
@@ -213,6 +221,33 @@
    </property>
    <property name="text">
     <string>&amp;Background</string>
+   </property>
+  </action>
+  <action name="action_ZoomFit">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/menu/view_zoom_fit_24x24.png</normaloff>:/icons/menu/view_zoom_fit_24x24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Fit</string>
+   </property>
+  </action>
+  <action name="action_ZoomIn">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/menu/view_zoom_in_24x24.png</normaloff>:/icons/menu/view_zoom_in_24x24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+  </action>
+  <action name="action_ZoomOut">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/menu/view_zoom_out_24x24.png</normaloff>:/icons/menu/view_zoom_out_24x24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
    </property>
   </action>
  </widget>

@@ -44,9 +44,13 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void setGridVisible(bool visible);
+    void zoomFit();
+    void zoomIn();
+    void zoomOut();
 
 protected:
     virtual void drawForeground(QPainter *painter, const QRectF &rect);
+    virtual void wheelEvent(QWheelEvent* event);
 
 private:
     bool m_isGridVisible;
