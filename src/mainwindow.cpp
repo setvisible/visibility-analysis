@@ -285,6 +285,21 @@ void MainWindow::createActions()
     //! [2]
 
     //! [3] View
+    GraphicsView *graphicsView = ui->viewerWidget->getView();
+
+    ui->action_ZoomFit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0));
+    ui->action_ZoomFit->setStatusTip(tr("Zoom Fit"));
+    connect(ui->action_ZoomFit, SIGNAL(triggered()), graphicsView, SLOT(zoomFit()));
+
+    ui->action_ZoomIn->setShortcuts(QKeySequence::ZoomIn);
+    ui->action_ZoomIn->setStatusTip(tr("Zoom In"));
+    connect(ui->action_ZoomIn, SIGNAL(triggered()), graphicsView, SLOT(zoomIn()));
+
+    ui->action_ZoomOut->setShortcuts(QKeySequence::ZoomOut);
+    ui->action_ZoomOut->setStatusTip(tr("Zoom Out"));
+    connect(ui->action_ZoomOut, SIGNAL(triggered()), graphicsView, SLOT(zoomOut()));
+
+    // --
     ui->action_Axes->setStatusTip(tr("Show Axes"));
     ui->action_Axes->setCheckable(true);
     ui->action_Axes->setChecked(false);
@@ -294,8 +309,7 @@ void MainWindow::createActions()
     ui->action_Grid->setStatusTip(tr("Show Grid"));
     ui->action_Grid->setCheckable(true);
     ui->action_Grid->setChecked(false);
-    GraphicsView *gv = ui->viewerWidget->getView();
-    connect(ui->action_Grid, SIGNAL(toggled(bool)), gv, SLOT(setGridVisible(bool)));
+    connect(ui->action_Grid, SIGNAL(toggled(bool)), graphicsView, SLOT(setGridVisible(bool)));
     //connect(ui->action_Grid, SIGNAL(toggled(bool)), m_option, SLOT(setGridVisible(bool)));
     //connect(m_option, SIGNAL(gridVisibilityChanged(bool)), ui->action_Grid, SLOT(setChecked(bool)));
 
