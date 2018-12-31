@@ -19,14 +19,15 @@
 #include <QtCore/QVarLengthArray>
 #include <QtGui/QPen>
 
+static const double C_SCALE_FACTOR = 1.15;
+
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
   , m_isGridVisible(false)
   , m_gridSize(50)
   , m_gridColor(Qt::black)
   , m_backgroundColor(Qt::white)
 {
-    const QMatrix matrix(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
-    setMatrix(matrix);
+    zoomFit();
     setBackgroundBrush(QBrush(m_backgroundColor));
 }
 
@@ -76,6 +77,8 @@ QColor GraphicsView::backgroundColor() const
     return m_backgroundColor;
 }
 
+/******************************************************************************
+ ******************************************************************************/
 void GraphicsView::drawForeground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
@@ -109,6 +112,26 @@ void GraphicsView::drawForeground(QPainter *painter, const QRectF &rect)
     }
 }
 
+/******************************************************************************
+ ******************************************************************************/
+void GraphicsView::zoomFit()
+{
+    const QMatrix matrix(1.0, 0.0, 0.0, -1.0, 0.0, 0.0);
+    this->setMatrix(matrix);
+}
+
+void GraphicsView::zoomIn()
+{
+    this->scale(C_SCALE_FACTOR, C_SCALE_FACTOR);
+}
+
+void GraphicsView::zoomOut()
+{
+    this->scale(1.0 / C_SCALE_FACTOR, 1.0 / C_SCALE_FACTOR);
+}
+
+/******************************************************************************
+ ******************************************************************************/
 QRectF GraphicsView::getViewportRect() const
 {
     const QPointF p1 = mapToScene(0, 0);
