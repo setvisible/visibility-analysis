@@ -1,0 +1,3 @@
+# BOOST
+INCLUDEPATH += $$Boost_INCLUDE_DIR
+LIBS        += -L$$Boost_LIB_DIR
