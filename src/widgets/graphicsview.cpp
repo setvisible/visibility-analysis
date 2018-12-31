@@ -18,6 +18,7 @@
 
 #include <QtCore/QVarLengthArray>
 #include <QtGui/QPen>
+#include <QtGui/QWheelEvent>
 
 static const double C_SCALE_FACTOR = 1.15;
 
@@ -109,6 +110,18 @@ void GraphicsView::drawForeground(QPainter *painter, const QRectF &rect)
 
         // revert the painter
         painter->setPen(savePen);
+    }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+void GraphicsView::wheelEvent(QWheelEvent *event)
+{
+    this->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    if (event->delta() > 0) {
+        zoomIn();
+    } else {
+        zoomOut();
     }
 }
 
