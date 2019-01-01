@@ -134,6 +134,17 @@ win32{
     }
 }
 
+# install BOOST binaries
+libs_boost_to_copy.files += $${Boost_BIN_DIR}/libboost_thread-mgw53-mt-1_61.dll
+libs_boost_to_copy.files += $${Boost_BIN_DIR}/libboost_system-mgw53-mt-1_61.dll
+libs_boost_to_copy.path = $${DESTDIR}
+INSTALLS += libs_boost_to_copy
+
+# install CGAL binaries
+libs_cgal_to_copy.files += $${CGAL_BIN_DIR}/*.dll
+libs_cgal_to_copy.path = $${DESTDIR}
+INSTALLS += libs_cgal_to_copy
+
 # install GMP binaries
 libs_gmp_to_copy.files += $${GMP_BIN_DIR}/*.dll
 libs_gmp_to_copy.path = $${DESTDIR}
