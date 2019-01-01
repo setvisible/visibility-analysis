@@ -4,6 +4,7 @@ HEADERS += \
     $$PWD/scene.h \
     $$PWD/scenemanager.h \
     $$PWD/segment.h \
+    $$PWD/solver.h \
     $$PWD/types.h
 
 SOURCES += \
@@ -11,4 +12,5 @@ SOURCES += \
     $$PWD/result.cpp \
     $$PWD/scene.cpp \
     $$PWD/scenemanager.cpp \
-    $$PWD/segment.cpp
+    $$PWD/segment.cpp \
+    $$PWD/solver.cpp
