@@ -134,3 +134,8 @@ win32{
     }
 }
 
+# install GMP binaries
+libs_gmp_to_copy.files += $${GMP_BIN_DIR}/*.dll
+libs_gmp_to_copy.path = $${DESTDIR}
+INSTALLS += libs_gmp_to_copy
+
