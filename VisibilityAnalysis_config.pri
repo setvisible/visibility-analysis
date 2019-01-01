@@ -19,3 +19,7 @@ GMP_INCLUDE_DIR   = "C:/dev/GMP/include"
 GMP_LIB_DIR       = "C:/dev/GMP/lib"
 GMP_BIN_DIR       = "C:/dev/GMP/bin"
 
+# MPFR
+MPFR_INCLUDE_DIR  = "C:/dev/MPFR/include"
+MPFR_LIB_DIR      = "C:/dev/MPFR/lib"
+MPFR_BIN_DIR      = "C:/dev/MPFR/bin"

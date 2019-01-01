@@ -139,3 +139,8 @@ libs_gmp_to_copy.files += $${GMP_BIN_DIR}/*.dll
 libs_gmp_to_copy.path = $${DESTDIR}
 INSTALLS += libs_gmp_to_copy
 
+# install MPFR binaries
+libs_mpfr_to_copy.files += $${MPFR_BIN_DIR}/*.dll
+libs_mpfr_to_copy.path = $${DESTDIR}
+INSTALLS += libs_mpfr_to_copy
+

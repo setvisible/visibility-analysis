@@ -1,0 +1,6 @@
+# GMP
+
+INCLUDEPATH += $$MPFR_INCLUDE_DIR
+
+LIBS += -L$${MPFR_LIB_DIR}
+LIBS += -lmpfr
