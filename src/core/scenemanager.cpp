@@ -25,7 +25,7 @@
  * It manages the Undo/Redo Mechanism for the SceneManager.
  */
 SceneManager::SceneManager(QObject *parent) : QObject(parent)
-  , m_scene(new Scene(this))
+  , m_scene(new Scene())
 {
     this->clear();
 }

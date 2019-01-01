@@ -17,13 +17,36 @@
 #ifndef CORE_SCENE_H
 #define CORE_SCENE_H
 
-#include <QtCore/QObject>
+#include <Core/Point>
+#include <Core/Segment>
 
-class Scene : public QObject
+#include <QtCore/QString>
+#include <QtCore/QVector>
+
+class Scene
 {
-    Q_OBJECT
 public:
-    explicit Scene(QObject *parent = Q_NULLPTR);
+    explicit Scene();
+
+    QString title() const;
+    void setTitle(const QString &title);
+
+    QString author() const;
+    void setAuthor(const QString &author);
+
+    QString date() const;
+    void setDate(const QString &date);
+
+    QString description() const;
+    void setDescription(const QString &description);
+
+private:
+    QString m_title;
+    QString m_author;
+    QString m_date;
+    QString m_description;
+    QVector<Point> m_points;
+    QVector<Segment> m_segments;
 
 };
 

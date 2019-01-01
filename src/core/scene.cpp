@@ -16,9 +16,67 @@
 
 #include "scene.h"
 
-#include "node/pointnode.h"
 
-Scene::Scene(QObject *parent) : QObject(parent)
+#ifdef QT_DEBUG
+#  include <QtCore/QDebug>
+#endif
+#ifdef QT_TESTLIB_LIB
+#  include <QtTest/QTest>
+#endif
+
+Scene::Scene()
+  : m_title(QString())
+  , m_author(QString())
+  , m_date(QString())
+  , m_description(QString())
 {
 }
+
+/******************************************************************************
+ ******************************************************************************/
+QString Scene::title() const
+{
+    return m_title;
+}
+
+void Scene::setTitle(const QString &title)
+{
+    m_title = title;
+}
+
+/******************************************************************************
+ ******************************************************************************/
+QString Scene::author() const
+{
+    return m_author;
+}
+
+void Scene::setAuthor(const QString &author)
+{
+    m_author = author;
+}
+
+/******************************************************************************
+ ******************************************************************************/
+QString Scene::date() const
+{
+    return m_date;
+}
+
+void Scene::setDate(const QString &date)
+{
+    m_date = date;
+}
+
+/******************************************************************************
+ ******************************************************************************/
+QString Scene::description() const
+{
+    return m_description;
+}
+void Scene::setDescription(const QString &description)
+{
+    m_description = description;
+}
+
 
