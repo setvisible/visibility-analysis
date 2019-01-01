@@ -1,9 +1,9 @@
 HEADERS += \
-    $$PWD/node/pointnode.h \
+    $$PWD/point.h \
     $$PWD/scene.h \
     $$PWD/scenemanager.h
 
 SOURCES += \
-    $$PWD/node/pointnode.cpp \
+    $$PWD/point.cpp \
     $$PWD/scene.cpp \
     $$PWD/scenemanager.cpp

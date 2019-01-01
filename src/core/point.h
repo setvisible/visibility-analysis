@@ -14,15 +14,15 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CORE_POINTNODE_H
-#define CORE_POINTNODE_H
+#ifndef CORE_POINT_H
+#define CORE_POINT_H
 
-class PointNode
+class Point
 {
 public:
-    explicit PointNode();
+    explicit Point();
 
 };
 
 
-#endif // CORE_POINTNODE_H
+#endif // CORE_POINT_H
