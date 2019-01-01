@@ -1,5 +1,6 @@
 HEADERS += \
     $$PWD/point.h \
+    $$PWD/result.h \
     $$PWD/scene.h \
     $$PWD/scenemanager.h \
     $$PWD/segment.h \
@@ -7,6 +8,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/point.cpp \
+    $$PWD/result.cpp \
     $$PWD/scene.cpp \
     $$PWD/scenemanager.cpp \
     $$PWD/segment.cpp
