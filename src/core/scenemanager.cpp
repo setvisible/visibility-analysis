@@ -16,8 +16,8 @@
 
 #include "scenemanager.h"
 
-#include "scene.h"
 #include <Core/Result>
+#include <Core/Scene>
 #include <Core/Solver>
 
 
@@ -27,7 +27,7 @@
  * It manages the Undo/Redo Mechanism for the SceneManager.
  */
 SceneManager::SceneManager(QObject *parent) : QObject(parent)
-  , m_scene(new Scene())
+  , m_scene(QSharedPointer<Scene>(new Scene))
   , m_solver(QSharedPointer<Solver>(new Solver))
 {
     this->clear();
@@ -40,6 +40,14 @@ SceneManager::SceneManager(QObject *parent) : QObject(parent)
  */
 void SceneManager::clear()
 {
+    m_scene->setTitle(QStringLiteral("untitled"));
+    m_scene->setAuthor(QStringLiteral("-"));
+    m_scene->setDate(QStringLiteral("-"));
+    m_scene->setDescription(QString());
+
+    // ...
+
+    recalculate();
 }
 
 /******************************************************************************

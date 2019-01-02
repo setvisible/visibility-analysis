@@ -38,13 +38,11 @@ class SceneManager : public QObject
 public:
     explicit SceneManager(QObject *parent = Q_NULLPTR);
 
-
     /* Plain Old Text Serialization */
     void read(QByteArray &bytes, bool *ok = 0);
     void write(QByteArray &bytes) const;
 
     /* Public Getters */
-    Scene* scene() const { return m_scene; }
 
 Q_SIGNALS:
     void changed();
@@ -53,7 +51,7 @@ public Q_SLOTS:
     virtual void clear();
   
 private:
-    Scene* m_scene;
+    QSharedPointer<Scene> m_scene;
     QSharedPointer<Solver> m_solver;
     Result m_result;
 
