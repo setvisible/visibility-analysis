@@ -17,6 +17,8 @@
 #include "scenemanager.h"
 
 #include "scene.h"
+#include <Core/Result>
+#include <Core/Solver>
 
 
 /*! \class Manager
@@ -26,6 +28,7 @@
  */
 SceneManager::SceneManager(QObject *parent) : QObject(parent)
   , m_scene(new Scene())
+  , m_solver(QSharedPointer<Solver>(new Solver))
 {
     this->clear();
 }
@@ -48,4 +51,18 @@ void SceneManager::read(QByteArray &bytes, bool *ok)
 
 void SceneManager::write(QByteArray &bytes) const
 {
+}
+
+/******************************************************************************
+ ******************************************************************************/
+void SceneManager::recalculate()
+{
+    /// \todo Use worker thread here.
+    /// \todo see  Mandelbrot Example  or  Blocking Fortune Client Example
+    if (m_solver && m_scene) {
+        m_result = m_solver->calculate(m_scene.data());
+    } else {
+        m_result.clear();
+    }
+    //emit resultsChanged();
 }
