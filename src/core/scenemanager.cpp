@@ -35,9 +35,13 @@ SceneManager::SceneManager(QObject *parent) : QObject(parent)
 
 /******************************************************************************
  ******************************************************************************/
-/*! \brief Clear and emit the change, in order to update the views,
- * that derive from AbstractSceneView.
+/*!
+ * \fn void SceneManager::changed()
+ * \brief This signal is emitted whenever the SceneManager data is changed.
  */
+
+/******************************************************************************
+ ******************************************************************************/
 void SceneManager::clear()
 {
     m_scene->setTitle(QStringLiteral("untitled"));
@@ -55,6 +59,7 @@ void SceneManager::clear()
 /* SERIALISATION */
 void SceneManager::read(QByteArray &bytes, bool *ok)
 {
+    clear();
 }
 
 void SceneManager::write(QByteArray &bytes) const
