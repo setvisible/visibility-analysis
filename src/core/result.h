@@ -17,7 +17,15 @@
 #ifndef CORE_RESULT_H
 #define CORE_RESULT_H
 
-#include "types.h"
+#include <Core/Segment>
+#include <QtCore/QList>
+
+#include <QtCore/QMetaType>
+#include <QtCore/QString>
+
+QT_BEGIN_NAMESPACE
+class QDebug;
+QT_END_NAMESPACE
 
 class Result
 {
@@ -26,10 +34,27 @@ public:
 
     void clear();
 
+    void addSegment(const Segment &segment);
+    QList<Segment> segments() const;
+
+    bool operator==(const Result &other) const;
+    bool operator!=(const Result &other) const;
+
+
 private:
-    Arrangement_2 m_arrangement;
-    Face_handle m_faceHandle;
+    QList<Segment> m_segments;
 };
 
+#ifdef QT_TESTLIB_LIB
+char *toString(const Result &result);
+#endif
+
+Q_DECLARE_METATYPE(Result)
+
+#ifdef QT_DEBUG
+QT_BEGIN_NAMESPACE
+QDebug operator<<(QDebug dbg, const Result &result);
+QT_END_NAMESPACE
+#endif
 
 #endif // CORE_RESULT_H
