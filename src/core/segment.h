@@ -17,11 +17,23 @@
 #ifndef CORE_SEGMENT_H
 #define CORE_SEGMENT_H
 
+#include <Core/Point>
+
 class Segment
 {
 public:
-    explicit Segment();
+    explicit Segment(const Point &point1, const Point &point2);
+    explicit Segment(qreal x1, qreal y1, qreal x2, qreal y2);
 
+    bool operator==(const Segment &other) const;
+    bool operator!=(const Segment &other) const;
+
+    Point point1() const { return m_point1; }
+    Point point2() const { return m_point2; }
+
+private:
+    Point m_point1;
+    Point m_point2;
 };
 
 

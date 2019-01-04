@@ -16,6 +16,28 @@
 
 #include "segment.h"
 
-Segment::Segment()
+Segment::Segment(const Point &point1, const Point &point2)
+    : m_point1(point1)
+    , m_point2(point2)
 {    
+}
+
+Segment::Segment(qreal x1, qreal y1, qreal x2, qreal y2)
+    : m_point1(Point(x1, y1))
+    , m_point2(Point(x2, y2))
+{
+}
+
+/******************************************************************************
+ ******************************************************************************/
+bool Segment::operator==(const Segment &other) const
+{
+    return m_point1 == other.m_point1
+            && m_point2 == other.m_point2;
+
+}
+
+bool Segment::operator!=(const Segment &other) const
+{
+    return ((*this) == other) ? false : true;
 }
