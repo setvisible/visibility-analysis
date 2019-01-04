@@ -19,8 +19,14 @@
 #include "types.h"
 #include <Core/Scene>
 
+#ifdef QT_DEBUG
+#  include <QtCore/QDebug>
+#endif
+
 #include <istream>
 #include <vector>
+
+Segment static createSegment(Arrangement_2::Ccb_halfedge_circulator halfedge);
 
 Solver::Solver()
 {
@@ -28,10 +34,53 @@ Solver::Solver()
 
 /******************************************************************************
  ******************************************************************************/
-Result Solver::calculate(const Scene */*scene*/)
+Result Solver::calculate(const Scene *scene, const Point &query) const
 {
-    /// \todo implement
-    return Result();
+    // Defining the input geometry
+    std::vector<Segment_2> segments;
+    foreach (const Segment &segment, scene->segments()) {
+        Point_2 p1(segment.point1().x(), segment.point1().y());
+        Point_2 p2(segment.point2().x(), segment.point2().y());
+        segments.push_back(Segment_2(p1, p2));
+    }
+
+    // Insert geometry into the arrangement
+    Arrangement_2 env;
+    CGAL::insert_non_intersecting_curves(env,segments.begin(),segments.end());
+
+    // Find the halfedge whose target is the query point.
+    //(usually you may know that already by other means)
+    Point_2 query_point(query.x(), query.y());
+
+    Halfedge_const_handle he = env.halfedges_begin();
+
+    /// \todo HACK
+    Point_2 pe3(19,-2), pe4(12,6);
+    while (he->source()->point() != pe3 || he->target()->point() != pe4) {
+        he++;
+    }
+
+    //visibility query
+    Arrangement_2 output_arr;
+    TEV tev(env);
+    Face_handle fh = tev.compute_visibility(query_point, he, output_arr);
+
+    // Output the visibility region.
+    Result result;
+    Arrangement_2::Ccb_halfedge_circulator curr = fh->outer_ccb();
+    result.addSegment(createSegment(curr));
+    while (++curr != fh->outer_ccb()) {
+        result.addSegment(createSegment(curr));
+    }
+    return result;
+}
+
+Segment static createSegment(Arrangement_2::Ccb_halfedge_circulator halfedge)
+{
+    Point_2 p1 = halfedge->source()->point();
+    Point_2 p2 = halfedge->target()->point();
+    return Segment(CGAL::to_double(p1.x()), CGAL::to_double(p1.y()),
+                   CGAL::to_double(p2.x()), CGAL::to_double(p2.y()));
 }
 
 /******************************************************************************

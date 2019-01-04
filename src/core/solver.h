@@ -18,8 +18,9 @@
 #define CORE_SOLVER_H
 
 #include <Core/Result>
+#include <Core/Scene>
+#include <Core/Point>
 
-class Scene;
 class Solver
 {
 public:
@@ -28,7 +29,7 @@ public:
     void solve_method1();
     void solve_method2();
 
-    Result calculate(const Scene *scene);
+    Result calculate(const Scene *scene, const Point &query) const;
 };
 
 #endif // CORE_SOLVER_H
