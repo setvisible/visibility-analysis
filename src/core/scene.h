@@ -21,7 +21,7 @@
 #include <Core/Segment>
 
 #include <QtCore/QString>
-#include <QtCore/QVector>
+#include <QtCore/QList>
 
 class Scene
 {
@@ -40,14 +40,21 @@ public:
     QString description() const;
     void setDescription(const QString &description);
 
+    void addSegment(const Point &point1, const Point &point2);
+    void addSegment(const Segment &segment);
+    void removeSegment(const Segment &segment);
+    void removeSegmentAt(const int index);
+    void removeAllSegments();
+    QList<Segment> segments() const;
+
 private:
     QString m_title;
     QString m_author;
     QString m_date;
     QString m_description;
-    QVector<Point> m_points;
-    QVector<Segment> m_segments;
 
+    QList<Point> m_points;
+    QList<Segment> m_segments;
 };
 
 #endif // CORE_SCENE_H
