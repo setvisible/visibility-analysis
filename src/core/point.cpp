@@ -16,6 +16,24 @@
 
 #include "point.h"
 
-Point::Point()
-{    
+#include <QtCore/QtGlobal> /* qFuzzyCompare() */
+
+Point::Point(const qreal x, const qreal y)
+    : m_x(x)
+    , m_y(y)
+{
+}
+
+/******************************************************************************
+ ******************************************************************************/
+bool Point::operator==(const Point &other) const
+{
+    return qFuzzyCompare((*this).x(), other.x())
+            && qFuzzyCompare((*this).y(), other.y());
+
+}
+
+bool Point::operator!=(const Point &other) const
+{
+    return ((*this) == other) ? false : true;
 }

@@ -17,10 +17,22 @@
 #ifndef CORE_POINT_H
 #define CORE_POINT_H
 
+#include <QtCore/QtGlobal>
+
 class Point
 {
 public:
-    explicit Point();
+    explicit Point(const qreal x, const qreal y);
+
+    bool operator==(const Point &other) const;
+    bool operator!=(const Point &other) const;
+
+    qreal x() const { return m_x; }
+    qreal y() const { return m_y; }
+
+private:
+    qreal m_x;
+    qreal m_y;
 
 };
 
