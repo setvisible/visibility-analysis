@@ -16,7 +16,9 @@
 
 #include "scenemanager.h"
 
-#include "scene.h"
+#include <Core/Result>
+#include <Core/Scene>
+#include <Core/Solver>
 
 
 /*! \class Manager
@@ -25,18 +27,31 @@
  * It manages the Undo/Redo Mechanism for the SceneManager.
  */
 SceneManager::SceneManager(QObject *parent) : QObject(parent)
-  , m_scene(new Scene(this))
+  , m_scene(QSharedPointer<Scene>(new Scene))
+  , m_solver(QSharedPointer<Solver>(new Solver))
 {
     this->clear();
 }
 
 /******************************************************************************
  ******************************************************************************/
-/*! \brief Clear and emit the change, in order to update the views,
- * that derive from AbstractSceneView.
+/*!
+ * \fn void SceneManager::changed()
+ * \brief This signal is emitted whenever the SceneManager data is changed.
  */
+
+/******************************************************************************
+ ******************************************************************************/
 void SceneManager::clear()
 {
+    m_scene->setTitle(QStringLiteral("untitled"));
+    m_scene->setAuthor(QStringLiteral("-"));
+    m_scene->setDate(QStringLiteral("-"));
+    m_scene->setDescription(QString());
+
+    // ...
+
+    recalculate();
 }
 
 /******************************************************************************
@@ -44,8 +59,23 @@ void SceneManager::clear()
 /* SERIALISATION */
 void SceneManager::read(QByteArray &bytes, bool *ok)
 {
+    clear();
 }
 
 void SceneManager::write(QByteArray &bytes) const
 {
+}
+
+/******************************************************************************
+ ******************************************************************************/
+void SceneManager::recalculate()
+{
+    /// \todo Use worker thread here.
+    /// \todo see  Mandelbrot Example  or  Blocking Fortune Client Example
+    if (m_solver && m_scene) {
+        m_result = m_solver->calculate(m_scene.data());
+    } else {
+        m_result.clear();
+    }
+    //emit resultsChanged();
 }

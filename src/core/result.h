@@ -14,47 +14,47 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CORE_SCENE_H
-#define CORE_SCENE_H
+#ifndef CORE_RESULT_H
+#define CORE_RESULT_H
 
-#include <Core/Point>
 #include <Core/Segment>
-
-#include <QtCore/QString>
 #include <QtCore/QList>
 
-class Scene
+#include <QtCore/QMetaType>
+#include <QtCore/QString>
+
+QT_BEGIN_NAMESPACE
+class QDebug;
+QT_END_NAMESPACE
+
+class Result
 {
 public:
-    explicit Scene();
+    explicit Result();
 
-    QString title() const;
-    void setTitle(const QString &title);
+    void clear();
 
-    QString author() const;
-    void setAuthor(const QString &author);
-
-    QString date() const;
-    void setDate(const QString &date);
-
-    QString description() const;
-    void setDescription(const QString &description);
-
-    void addSegment(const Point &point1, const Point &point2);
     void addSegment(const Segment &segment);
-    void removeSegment(const Segment &segment);
-    void removeSegmentAt(const int index);
-    void removeAllSegments();
     QList<Segment> segments() const;
 
-private:
-    QString m_title;
-    QString m_author;
-    QString m_date;
-    QString m_description;
+    bool operator==(const Result &other) const;
+    bool operator!=(const Result &other) const;
 
-    QList<Point> m_points;
+
+private:
     QList<Segment> m_segments;
 };
 
-#endif // CORE_SCENE_H
+#ifdef QT_TESTLIB_LIB
+char *toString(const Result &result);
+#endif
+
+Q_DECLARE_METATYPE(Result)
+
+#ifdef QT_DEBUG
+QT_BEGIN_NAMESPACE
+QDebug operator<<(QDebug dbg, const Result &result);
+QT_END_NAMESPACE
+#endif
+
+#endif // CORE_RESULT_H

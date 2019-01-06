@@ -17,17 +17,20 @@
 #ifndef CORE_SCENEMANAGER_H
 #define CORE_SCENEMANAGER_H
 
+#include <Core/Result>
 
 #include <QtCore/QObject>
 #include <QtCore/QtContainerFwd> /* Forward Declarations of the Qt's Containers */
 
 #include <QtCore/QSet>
+#include <QtCore/QSharedPointer>
 
 QT_BEGIN_NAMESPACE
 class QString;
 QT_END_NAMESPACE
 
 class Scene;
+class Solver;
 
 class SceneManager : public QObject
 {
@@ -35,13 +38,11 @@ class SceneManager : public QObject
 public:
     explicit SceneManager(QObject *parent = Q_NULLPTR);
 
-
     /* Plain Old Text Serialization */
     void read(QByteArray &bytes, bool *ok = 0);
     void write(QByteArray &bytes) const;
 
     /* Public Getters */
-    Scene* scene() const { return m_scene; }
 
 Q_SIGNALS:
     void changed();
@@ -50,8 +51,11 @@ public Q_SLOTS:
     virtual void clear();
   
 private:
-    Scene* m_scene;
+    QSharedPointer<Scene> m_scene;
+    QSharedPointer<Solver> m_solver;
+    Result m_result;
 
+    void recalculate();
 };
 
 #endif // CORE_SCENEMANAGER_H

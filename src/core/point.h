@@ -14,8 +14,27 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "pointnode.h"
+#ifndef CORE_POINT_H
+#define CORE_POINT_H
 
-PointNode::PointNode()
-{    
-}
+#include <QtCore/QtGlobal>
+
+class Point
+{
+public:
+    explicit Point(const qreal x, const qreal y);
+
+    bool operator==(const Point &other) const;
+    bool operator!=(const Point &other) const;
+
+    qreal x() const { return m_x; }
+    qreal y() const { return m_y; }
+
+private:
+    qreal m_x;
+    qreal m_y;
+
+};
+
+
+#endif // CORE_POINT_H

@@ -14,15 +14,26 @@
  * License along with this program; If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CORE_POINTNODE_H
-#define CORE_POINTNODE_H
+#include "point.h"
 
-class PointNode
+#include <QtCore/QtGlobal> /* qFuzzyCompare() */
+
+Point::Point(const qreal x, const qreal y)
+    : m_x(x)
+    , m_y(y)
 {
-public:
-    explicit PointNode();
+}
 
-};
+/******************************************************************************
+ ******************************************************************************/
+bool Point::operator==(const Point &other) const
+{
+    return qFuzzyCompare((*this).x(), other.x())
+            && qFuzzyCompare((*this).y(), other.y());
 
+}
 
-#endif // CORE_POINTNODE_H
+bool Point::operator!=(const Point &other) const
+{
+    return ((*this) == other) ? false : true;
+}
