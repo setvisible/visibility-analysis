@@ -60,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     readSettings();
 
+    // TEST
+    m_sceneManager->clear();
+
     newFile();
 }
 

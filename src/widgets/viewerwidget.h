@@ -21,8 +21,11 @@
 
 class SceneManager;
 class GraphicsView;
+class ResultItem;
 
+QT_BEGIN_NAMESPACE
 class QGraphicsScene;
+QT_END_NAMESPACE
 
 namespace Ui {
 class ViewerWidget;
@@ -35,12 +38,14 @@ public:
     explicit ViewerWidget(QWidget *parent = 0);
     ~ViewerWidget();
 
+    SceneManager *model() const;
     void setModel(SceneManager *sceneManager);
 
     virtual QGraphicsScene* getScene() const;
     virtual GraphicsView* getView() const;
 
 public Q_SLOTS:
+    virtual void onResultsChanged();
 
 private:
     Ui::ViewerWidget *ui;
@@ -48,6 +53,7 @@ private:
 
     GraphicsView *m_graphicsView;
     QGraphicsScene *m_scene;
+    ResultItem *m_resultItem;
 };
 
 #endif // WIDGETS_VIEWERWIDGET_H
