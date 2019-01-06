@@ -36,6 +36,10 @@ Solver::Solver()
  ******************************************************************************/
 Result Solver::calculate(const Scene *scene, const Point &query) const
 {
+    if (!scene || scene->segments().size() <= 0) {
+        return Result();
+    }
+
     // Defining the input geometry
     std::vector<Segment_2> segments;
     foreach (const Segment &segment, scene->segments()) {
