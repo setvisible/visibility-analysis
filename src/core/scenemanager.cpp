@@ -68,6 +68,13 @@ void SceneManager::write(QByteArray &bytes) const
 
 /******************************************************************************
  ******************************************************************************/
+Result SceneManager::result() const
+{
+    return m_result;
+}
+
+/******************************************************************************
+ ******************************************************************************/
 void SceneManager::recalculate()
 {
     /// \todo Use worker thread here.
@@ -77,5 +84,5 @@ void SceneManager::recalculate()
     } else {
         m_result.clear();
     }
-    //emit resultsChanged();
+    emit resultsChanged();
 }
