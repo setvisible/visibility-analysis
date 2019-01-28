@@ -68,14 +68,21 @@ void SceneManager::write(QByteArray &bytes) const
 
 /******************************************************************************
  ******************************************************************************/
+Result SceneManager::result() const
+{
+    return m_result;
+}
+
+/******************************************************************************
+ ******************************************************************************/
 void SceneManager::recalculate()
 {
     /// \todo Use worker thread here.
     /// \todo see  Mandelbrot Example  or  Blocking Fortune Client Example
     if (m_solver && m_scene) {
-        m_result = m_solver->calculate(m_scene.data());
+        m_result = m_solver->calculate(m_scene.data(), Point(0,0));
     } else {
         m_result.clear();
     }
-    //emit resultsChanged();
+    emit resultsChanged();
 }

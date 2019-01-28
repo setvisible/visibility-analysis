@@ -17,7 +17,11 @@
 #include "viewerwidget.h"
 #include "ui_viewerwidget.h"
 
+#include "graphics/resultitem.h"
+
+#include <Core/SceneManager>
 #include <Widgets/GraphicsView>
+
 
 #include <QtWidgets/QGraphicsScene>
 
@@ -26,8 +30,11 @@ ViewerWidget::ViewerWidget(QWidget *parent) : QWidget(parent)
   , m_sceneManager(Q_NULLPTR)
   , m_graphicsView(new GraphicsView(this))
   , m_scene(new QGraphicsScene(QRectF(QPointF(-100, 100), QSizeF(200, 200))))
+  , m_resultItem(new ResultItem())
 {
     ui->setupUi(this);
+
+    m_scene->addItem(m_resultItem);
 
     layout()->addWidget(m_graphicsView);
     m_graphicsView->setScene(m_scene);
@@ -41,11 +48,37 @@ ViewerWidget::~ViewerWidget()
 
 /******************************************************************************
  ******************************************************************************/
-void ViewerWidget::setModel(SceneManager *sceneManager)
+SceneManager *ViewerWidget::model() const
 {
-    m_sceneManager = sceneManager;
+    return m_sceneManager;
 }
 
+void ViewerWidget::setModel(SceneManager *sceneManager)
+{
+    if (m_sceneManager == sceneManager) {
+        return;
+    }
+
+    if (m_sceneManager) {
+        QObject::disconnect(m_sceneManager, SIGNAL(resultsChanged()),
+                            this, SLOT(onResultsChanged()));
+    }
+    m_sceneManager = sceneManager;
+    if (m_sceneManager) {
+        QObject::connect(m_sceneManager, SIGNAL(resultsChanged()),
+                         this, SLOT(onResultsChanged()));
+    }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+void ViewerWidget::onResultsChanged()
+{
+    m_resultItem->setResult(model()->result());
+}
+
+/******************************************************************************
+ ******************************************************************************/
 QGraphicsScene* ViewerWidget::getScene() const
 {
   return m_scene;

@@ -43,9 +43,11 @@ public:
     void write(QByteArray &bytes) const;
 
     /* Public Getters */
+    Result result() const;
 
 Q_SIGNALS:
     void changed();
+    void resultsChanged();
 
 public Q_SLOTS:
     virtual void clear();
