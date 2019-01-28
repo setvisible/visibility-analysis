@@ -424,7 +424,7 @@ bool MainWindow::loadFile(const QString &path)
 void MainWindow::on_action_SimpleDrawing_triggered()
 {
     if (maybeSave()) {
-        loadFile(":/examples/SimpleDrawing.dat");
+        loadFile(":/examples/SimpleDrawing.json");
     }
 }
 
