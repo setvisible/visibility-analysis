@@ -26,6 +26,7 @@
 #include <QtCore/QSharedPointer>
 
 QT_BEGIN_NAMESPACE
+class QJsonObject;
 class QString;
 QT_END_NAMESPACE
 
@@ -38,9 +39,9 @@ class SceneManager : public QObject
 public:
     explicit SceneManager(QObject *parent = Q_NULLPTR);
 
-    /* Plain Old Text Serialization */
-    void read(QByteArray &bytes, bool *ok = 0);
-    void write(QByteArray &bytes) const;
+    /* JSON Serialization */
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
     /* Public Getters */
     Result result() const;

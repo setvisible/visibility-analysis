@@ -16,6 +16,14 @@
 
 #include "segment.h"
 
+#include <QtCore/QJsonObject>
+
+Segment::Segment()
+    : m_point1(Point())
+    , m_point2(Point())
+{
+}
+
 Segment::Segment(const Point &point1, const Point &point2)
     : m_point1(point1)
     , m_point2(point2)
@@ -26,6 +34,25 @@ Segment::Segment(qreal x1, qreal y1, qreal x2, qreal y2)
     : m_point1(Point(x1, y1))
     , m_point2(Point(x2, y2))
 {
+}
+
+/******************************************************************************
+ ******************************************************************************/
+/* JSON Serialization */
+/*! \brief Assign the Segment's members values from the given \a json object.
+ */
+void Segment::read(const QJsonObject &json)
+{
+    m_pointUid1 = json["point_1"].toString();
+    m_pointUid2 = json["point_2"].toString();
+}
+
+/*! \brief Assigns the values from the Segment to the given \a json object.
+ */
+void Segment::write(QJsonObject &json) const
+{
+    json["point_1"] = m_pointUid1;
+    json["point_2"] = m_pointUid2;
 }
 
 /******************************************************************************

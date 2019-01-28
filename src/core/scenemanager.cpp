@@ -20,6 +20,11 @@
 #include <Core/Scene>
 #include <Core/Solver>
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
+#ifdef QT_DEBUG
+#  include <QtCore/QDebug>
+#endif
 
 /*! \class Manager
  *  \brief The class Manager is an adapter class for SceneManager.
@@ -51,19 +56,30 @@ void SceneManager::clear()
 
     // ...
 
-    recalculate();
 }
 
 /******************************************************************************
  ******************************************************************************/
-/* SERIALISATION */
-void SceneManager::read(QByteArray &bytes, bool *ok)
+/* SERIALISATION JSON */
+/*! \brief Assign the SceneManager's members values from the given \a json object.
+ */
+void SceneManager::read(const QJsonObject &json)
 {
     clear();
+    m_scene->read(json);
+    emit changed();
+    qDebug() << "Loaded: [title: "  << m_scene->title()
+             << ", description: "   << m_scene->description()
+             << ", date: "          << m_scene->date()
+             << ", author: "        << m_scene->author()
+             <<"]";
 }
 
-void SceneManager::write(QByteArray &bytes) const
+/*! \brief Assigns the values from the SceneManager to the given \a json object.
+ */
+void SceneManager::write(QJsonObject &json) const
 {
+    m_scene->write(json);
 }
 
 /******************************************************************************

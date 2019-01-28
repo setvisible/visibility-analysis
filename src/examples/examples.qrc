@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/examples/">
-        <file>SimpleDrawing.dat</file>
+        <file>SimpleDrawing.json</file>
     </qresource>
 </RCC>

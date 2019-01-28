@@ -23,10 +23,18 @@
 #include <QtCore/QString>
 #include <QtCore/QList>
 
+QT_BEGIN_NAMESPACE
+class QJsonObject;
+QT_END_NAMESPACE
+
 class Scene
 {
 public:
     explicit Scene();
+
+    /* JSON Serialization */
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
     QString title() const;
     void setTitle(const QString &title);

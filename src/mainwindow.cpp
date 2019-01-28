@@ -27,9 +27,12 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtCore/QSettings>
-#include <QtCore/QUrl>
 #include <QtCore/QStandardPaths>
+#include <QtCore/QUrl>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -58,10 +61,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createActions();
     createMenus();
 
-    readSettings();
 
     // TEST
     m_sceneManager->clear();
+
+    readSettings();
 
     newFile();
 }
@@ -91,7 +95,7 @@ void MainWindow::newFile()
     if (maybeSave()) {
         m_physicalFile = false;
         m_currentFile = QFileInfo();
-        m_currentFile.setFile(QStringLiteral("untitled.dat"));
+        m_currentFile.setFile(QStringLiteral("untitled.json"));
         m_sceneManager->clear();
 
         /* Settings */
@@ -125,7 +129,7 @@ bool MainWindow::save()
 
 bool MainWindow::saveAs()
 {
-    QString filePath = askSaveFileName(QStringLiteral("Data File (*.dat)"),
+    QString filePath = askSaveFileName(QStringLiteral("Data File (*.json)"),
                                        tr("Data File"));
     if (filePath.isEmpty()) {
         return false;
@@ -136,7 +140,7 @@ bool MainWindow::saveAs()
 void MainWindow::open()
 {
     if (maybeSave()) {
-        QString filePath = askOpenFileName(tr("Data File (*.dat);;All files (*.*)"));
+        QString filePath = askOpenFileName(tr("Data File (*.json);;All files (*.*)"));
         if (!filePath.isEmpty()) {
             if (loadFile(filePath)) {
                 this->setClean();
@@ -365,9 +369,10 @@ bool MainWindow::saveFile(const QString &path)
         return false;
     }
 
-    QByteArray ba;
-    m_sceneManager->write(ba);
-    file.write( ba );
+    QJsonObject json;
+    m_sceneManager->write(json);
+    QJsonDocument saveDoc(json);
+    file.write( saveDoc.toJson() );
 
     m_physicalFile = true;
     m_currentFile.setFile(path);
@@ -389,17 +394,24 @@ bool MainWindow::loadFile(const QString &path)
                              .arg(file.errorString()));
         return false;
     }
-    bool ok;
-    QByteArray data = file.readAll();
-    m_sceneManager->read(data, &ok);
-    if (!ok) {
-        qCritical("Couldn't parse DAT file.");
+    QByteArray saveData = file.readAll();
+    QJsonParseError ok;
+    QJsonDocument loadDoc( QJsonDocument::fromJson(saveData, &ok) );
+
+    if (ok.error != QJsonParseError::NoError) {
+        qCritical("Couldn't parse JSON file.");
         QMessageBox::warning(this, tr("Error"),
-                             tr("Error found in the DAT file:\n"
-                                "%1\n")
-                             .arg(path));
+                             tr("Cannot parse the JSON file:\n"
+                                "%1\n\n"
+                                "At character %2, %3.\n\n"
+                                "Operation cancelled.")
+                             .arg(path)
+                             .arg(ok.offset)
+                             .arg(ok.errorString()));
+        return false;
     }
 
+    m_sceneManager->read(loadDoc.object());
     m_physicalFile = true;
     m_currentFile = path;
     this->statusBar()->showMessage(tr("File loaded"), 5000);
@@ -412,7 +424,7 @@ bool MainWindow::loadFile(const QString &path)
 void MainWindow::on_action_SimpleDrawing_triggered()
 {
     if (maybeSave()) {
-        loadFile(":/examples/SimpleDrawing.dat");
+        loadFile(":/examples/SimpleDrawing.json");
     }
 }
 

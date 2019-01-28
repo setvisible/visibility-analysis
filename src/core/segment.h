@@ -18,12 +18,22 @@
 #define CORE_SEGMENT_H
 
 #include <Core/Point>
+#include <QtCore/QString>
+
+QT_BEGIN_NAMESPACE
+class QJsonObject;
+QT_END_NAMESPACE
 
 class Segment
 {
 public:
+    explicit Segment();
     explicit Segment(const Point &point1, const Point &point2);
     explicit Segment(qreal x1, qreal y1, qreal x2, qreal y2);
+
+    /* JSON Serialization */
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
     bool operator==(const Segment &other) const;
     bool operator!=(const Segment &other) const;
@@ -32,6 +42,8 @@ public:
     Point point2() const { return m_point2; }
 
 private:
+    QString m_pointUid1;
+    QString m_pointUid2;
     Point m_point1;
     Point m_point2;
 };
