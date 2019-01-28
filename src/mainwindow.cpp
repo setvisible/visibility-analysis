@@ -28,8 +28,8 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QSettings>
-#include <QtCore/QUrl>
 #include <QtCore/QStandardPaths>
+#include <QtCore/QUrl>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -58,10 +58,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createActions();
     createMenus();
 
-    readSettings();
 
     // TEST
     m_sceneManager->clear();
+
+    readSettings();
 
     newFile();
 }
@@ -91,7 +92,7 @@ void MainWindow::newFile()
     if (maybeSave()) {
         m_physicalFile = false;
         m_currentFile = QFileInfo();
-        m_currentFile.setFile(QStringLiteral("untitled.dat"));
+        m_currentFile.setFile(QStringLiteral("untitled.json"));
         m_sceneManager->clear();
 
         /* Settings */
@@ -125,7 +126,7 @@ bool MainWindow::save()
 
 bool MainWindow::saveAs()
 {
-    QString filePath = askSaveFileName(QStringLiteral("Data File (*.dat)"),
+    QString filePath = askSaveFileName(QStringLiteral("Data File (*.json)"),
                                        tr("Data File"));
     if (filePath.isEmpty()) {
         return false;
@@ -136,7 +137,7 @@ bool MainWindow::saveAs()
 void MainWindow::open()
 {
     if (maybeSave()) {
-        QString filePath = askOpenFileName(tr("Data File (*.dat);;All files (*.*)"));
+        QString filePath = askOpenFileName(tr("Data File (*.json);;All files (*.*)"));
         if (!filePath.isEmpty()) {
             if (loadFile(filePath)) {
                 this->setClean();
@@ -393,9 +394,9 @@ bool MainWindow::loadFile(const QString &path)
     QByteArray data = file.readAll();
     m_sceneManager->read(data, &ok);
     if (!ok) {
-        qCritical("Couldn't parse DAT file.");
+        qCritical("Couldn't parse JSON file.");
         QMessageBox::warning(this, tr("Error"),
-                             tr("Error found in the DAT file:\n"
+                             tr("Cannot parse the JSON file:\n"
                                 "%1\n")
                              .arg(path));
     }
