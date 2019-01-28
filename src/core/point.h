@@ -18,11 +18,21 @@
 #define CORE_POINT_H
 
 #include <QtCore/QtGlobal>
+#include <QtCore/QString>
+
+QT_BEGIN_NAMESPACE
+class QJsonObject;
+QT_END_NAMESPACE
 
 class Point
 {
 public:
+    explicit Point();
     explicit Point(const qreal x, const qreal y);
+
+    /* JSON Serialization */
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
     bool operator==(const Point &other) const;
     bool operator!=(const Point &other) const;
@@ -31,10 +41,9 @@ public:
     qreal y() const { return m_y; }
 
 private:
+    QString m_uid;
     qreal m_x;
     qreal m_y;
-
 };
-
 
 #endif // CORE_POINT_H

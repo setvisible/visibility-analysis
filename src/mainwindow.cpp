@@ -370,6 +370,7 @@ bool MainWindow::saveFile(const QString &path)
     }
 
     QJsonObject json;
+    m_sceneManager->write(json);
     QJsonDocument saveDoc(json);
     file.write( saveDoc.toJson() );
 
@@ -410,6 +411,7 @@ bool MainWindow::loadFile(const QString &path)
         return false;
     }
 
+    m_sceneManager->read(loadDoc.object());
     m_physicalFile = true;
     m_currentFile = path;
     this->statusBar()->showMessage(tr("File loaded"), 5000);

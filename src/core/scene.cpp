@@ -17,6 +17,8 @@
 #include "scene.h"
 
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
 #ifdef QT_DEBUG
 #  include <QtCore/QDebug>
 #endif
@@ -30,6 +32,65 @@ Scene::Scene()
     , m_date(QString())
     , m_description(QString())
 {
+}
+
+/******************************************************************************
+ ******************************************************************************/
+/* JSON Serialization */
+/*! \brief Assign the Scene's members values from the given \a json object.
+ */
+void Scene::read(const QJsonObject &json)
+{
+    m_title = json["title"].toString();
+    m_author = json["author"].toString();
+    m_date = json["date"].toString();
+    m_description = json["description"].toString();
+
+    m_points.clear();
+    QJsonArray pointsArray = json["points"].toArray();
+     for (int i = 0; i < pointsArray.size(); ++i) {
+         QJsonObject pointObject = pointsArray[i].toObject();
+         Point point;
+         point.read(pointObject);
+         m_points.append(point);
+     }
+
+     m_segments.clear();
+     QJsonArray spacesArray = json["segments"].toArray();
+     for (int i = 0; i < spacesArray.size(); ++i) {
+         QJsonObject segmentObject = spacesArray[i].toObject();
+         Segment segment;
+         segment.read(segmentObject);
+         m_segments.append(segment);
+     }
+
+     // Try to resolve correspondance segments <-> points
+}
+
+/*! \brief Assigns the values from the Scene to the given \a json object.
+ */
+void Scene::write(QJsonObject &json) const
+{
+    json["title"] = m_title;
+    json["author"] = m_author;
+    json["date"] = m_date;
+    json["description"] = m_description;
+
+    QJsonArray pointsArray;
+    foreach (const Point point, m_points) {
+        QJsonObject pointObject;
+        point.write(pointObject);
+        pointsArray.append(pointObject);
+    }
+    json["points"] = pointsArray;
+
+    QJsonArray segmentsArray;
+    foreach (const Segment segment, m_segments) {
+        QJsonObject segmentObject;
+        segment.write(segmentObject);
+        segmentsArray.append(segmentObject);
+    }
+    json["segments"] = segmentsArray;
 }
 
 /******************************************************************************
