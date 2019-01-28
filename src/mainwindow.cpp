@@ -27,6 +27,9 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QUrl>
@@ -366,9 +369,9 @@ bool MainWindow::saveFile(const QString &path)
         return false;
     }
 
-    QByteArray ba;
-    m_sceneManager->write(ba);
-    file.write( ba );
+    QJsonObject json;
+    QJsonDocument saveDoc(json);
+    file.write( saveDoc.toJson() );
 
     m_physicalFile = true;
     m_currentFile.setFile(path);
@@ -390,15 +393,21 @@ bool MainWindow::loadFile(const QString &path)
                              .arg(file.errorString()));
         return false;
     }
-    bool ok;
-    QByteArray data = file.readAll();
-    m_sceneManager->read(data, &ok);
-    if (!ok) {
+    QByteArray saveData = file.readAll();
+    QJsonParseError ok;
+    QJsonDocument loadDoc( QJsonDocument::fromJson(saveData, &ok) );
+
+    if (ok.error != QJsonParseError::NoError) {
         qCritical("Couldn't parse JSON file.");
         QMessageBox::warning(this, tr("Error"),
                              tr("Cannot parse the JSON file:\n"
-                                "%1\n")
-                             .arg(path));
+                                "%1\n\n"
+                                "At character %2, %3.\n\n"
+                                "Operation cancelled.")
+                             .arg(path)
+                             .arg(ok.offset)
+                             .arg(ok.errorString()));
+        return false;
     }
 
     m_physicalFile = true;
