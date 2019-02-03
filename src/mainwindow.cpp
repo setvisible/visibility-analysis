@@ -22,6 +22,7 @@
 #include "globals.h"
 
 #include <Core/SceneManager>
+#include <Dialogs/PropertiesDialog>
 #include <Widgets/GraphicsView>
 #include <Widgets/MainWidget>
 
@@ -147,6 +148,14 @@ void MainWindow::open()
             }
         }
     }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+void MainWindow::showFileProperties()
+{
+    PropertiesDialog dialog(m_sceneManager, this);
+    dialog.exec();
 }
 
 /******************************************************************************
@@ -278,6 +287,11 @@ void MainWindow::createActions()
     ui->action_SaveAs->setShortcuts(QKeySequence::SaveAs);
     ui->action_SaveAs->setStatusTip(tr("Save the world to a different file"));
     connect(ui->action_SaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
+
+    // --
+    ui->action_Properties->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
+    ui->action_Properties->setStatusTip(tr("Show the properties of the current file"));
+    connect(ui->action_Properties, SIGNAL(triggered()), this, SLOT(showFileProperties()));
 
     // --
     ui->action_Exit->setShortcuts(QKeySequence::Quit);
