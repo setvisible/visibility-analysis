@@ -57,22 +57,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     this->setAcceptDrops(true);
 
+    /* Connect the GUI to the SceneManager. */
     ui->viewerWidget->setModel(m_sceneManager);
 
+    /* Connect the SceneManager to the MainWindow. */
+    /* The SceneManager centralizes the changes. */
     QObject::connect(m_sceneManager, SIGNAL(changed()), this, SLOT(setDirty()));
 
+    /* Connect the rest of the GUI widgets together (selection, focus, etc.) */
     createActions();
     createMenus();
-
-
-    // TEST
-    m_sceneManager->clear();
 
     readSettings();
 
     newFile();
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -260,7 +259,6 @@ void MainWindow::writeSettings()
     }
     settings.setValue("WindowState", (int)this->windowState()); // minimized, maximized, active, fullscreen...
 
-
     // --------------------------------------------------------------
     // Write also the current version of application in the settings,
     // because it might be used by 3rd-party update manager softwares like
@@ -368,7 +366,6 @@ void MainWindow::createMenus()
 
 }
 
-
 /******************************************************************************
  ******************************************************************************/
 bool MainWindow::saveFile(const QString &path)
@@ -443,4 +440,3 @@ void MainWindow::on_action_SimpleDrawing_triggered()
         loadFile(":/examples/SimpleDrawing.json");
     }
 }
-
