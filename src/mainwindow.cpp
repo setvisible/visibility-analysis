@@ -59,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     ui->viewerWidget->setModel(m_sceneManager);
 
+    QObject::connect(m_sceneManager, SIGNAL(changed()), this, SLOT(setDirty()));
+
     createActions();
     createMenus();
 
