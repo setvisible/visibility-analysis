@@ -51,6 +51,7 @@ INCLUDEPATH += $$PWD/../include/
 # SOURCES
 #-------------------------------------------------
 include($$PWD/core/core.pri)
+include($$PWD/dialogs/dialogs.pri)
 include($$PWD/utils/utils.pri)
 include($$PWD/widgets/widgets.pri)
 
