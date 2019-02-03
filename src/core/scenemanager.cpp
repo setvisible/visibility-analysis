@@ -84,6 +84,66 @@ void SceneManager::write(QJsonObject &json) const
 
 /******************************************************************************
  ******************************************************************************/
+QString SceneManager::title() const
+{
+    return m_scene->title();
+}
+
+void SceneManager::setTitle(const QString &title)
+{
+    if (m_scene->title() != title) {
+        m_scene->setTitle(title);
+        emit changed();
+    }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+QString SceneManager::author() const
+{
+    return m_scene->author();
+}
+
+void SceneManager::setAuthor(const QString &author)
+{
+    if (m_scene->author() != author) {
+        m_scene->setAuthor(author);
+        emit changed();
+    }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+QString SceneManager::date() const
+{
+    return m_scene->date();
+}
+
+void SceneManager::setDate(const QString &date)
+{
+    if (m_scene->date() != date) {
+        m_scene->setDate(date);
+        emit changed();
+    }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+QString SceneManager::description() const
+{
+    return m_scene->description();
+}
+
+void SceneManager::setDescription(const QString &description)
+{
+    if (m_scene->description() != description) {
+        m_scene->setDescription(description);
+        emit changed();
+    }
+}
+
+/******************************************************************************
+ ******************************************************************************/
 Result SceneManager::result() const
 {
     return m_result;
