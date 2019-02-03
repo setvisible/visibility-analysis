@@ -44,6 +44,11 @@ public:
     void write(QJsonObject &json) const;
 
     /* Public Getters */
+    QString title() const;
+    QString author() const;
+    QString date() const;
+    QString description() const;
+
     Result result() const;
 
 Q_SIGNALS:
@@ -52,6 +57,11 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     virtual void clear();
+
+    virtual void setTitle(const QString &title);
+    virtual void setAuthor(const QString &author);
+    virtual void setDate(const QString &date);
+    virtual void setDescription(const QString &description);
   
 private:
     QSharedPointer<Scene> m_scene;

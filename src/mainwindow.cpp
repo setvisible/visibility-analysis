@@ -22,6 +22,7 @@
 #include "globals.h"
 
 #include <Core/SceneManager>
+#include <Dialogs/PropertiesDialog>
 #include <Widgets/GraphicsView>
 #include <Widgets/MainWidget>
 
@@ -56,20 +57,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     this->setAcceptDrops(true);
 
+    /* Connect the GUI to the SceneManager. */
     ui->viewerWidget->setModel(m_sceneManager);
 
+    /* Connect the SceneManager to the MainWindow. */
+    /* The SceneManager centralizes the changes. */
+    QObject::connect(m_sceneManager, SIGNAL(changed()), this, SLOT(setDirty()));
+
+    /* Connect the rest of the GUI widgets together (selection, focus, etc.) */
     createActions();
     createMenus();
-
-
-    // TEST
-    m_sceneManager->clear();
 
     readSettings();
 
     newFile();
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -147,6 +149,14 @@ void MainWindow::open()
             }
         }
     }
+}
+
+/******************************************************************************
+ ******************************************************************************/
+void MainWindow::showFileProperties()
+{
+    PropertiesDialog dialog(m_sceneManager, this);
+    dialog.exec();
 }
 
 /******************************************************************************
@@ -249,7 +259,6 @@ void MainWindow::writeSettings()
     }
     settings.setValue("WindowState", (int)this->windowState()); // minimized, maximized, active, fullscreen...
 
-
     // --------------------------------------------------------------
     // Write also the current version of application in the settings,
     // because it might be used by 3rd-party update manager softwares like
@@ -278,6 +287,11 @@ void MainWindow::createActions()
     ui->action_SaveAs->setShortcuts(QKeySequence::SaveAs);
     ui->action_SaveAs->setStatusTip(tr("Save the world to a different file"));
     connect(ui->action_SaveAs, SIGNAL(triggered()), this, SLOT(saveAs()));
+
+    // --
+    ui->action_Properties->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
+    ui->action_Properties->setStatusTip(tr("Show the properties of the current file"));
+    connect(ui->action_Properties, SIGNAL(triggered()), this, SLOT(showFileProperties()));
 
     // --
     ui->action_Exit->setShortcuts(QKeySequence::Quit);
@@ -351,7 +365,6 @@ void MainWindow::createMenus()
 {
 
 }
-
 
 /******************************************************************************
  ******************************************************************************/
@@ -427,4 +440,3 @@ void MainWindow::on_action_SimpleDrawing_triggered()
         loadFile(":/examples/SimpleDrawing.json");
     }
 }
-
